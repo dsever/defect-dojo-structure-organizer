@@ -1,1 +1,2 @@
-defectdojo_api
+pyyaml
+yamllint

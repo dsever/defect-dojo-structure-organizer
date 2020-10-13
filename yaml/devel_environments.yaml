@@ -1,9 +1,7 @@
 development_environments:
-   Development:
-     name: Development
-   Test:
-     name: Test
-   Stage:
-     name: Stage
-   Production:
-     name: Production
+   - name: Development
+   - name: Test
+   - name: Stage
+   - name: Production
+
+

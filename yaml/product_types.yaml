@@ -1,0 +1,11 @@
+product_types:
+  - name: security
+    critical_product: true
+    key_product: true
+  - name: nfvi
+    critical_product: true
+    key_product: true
+  - name: cicd
+    critical_product: true
+    key_product: true
+

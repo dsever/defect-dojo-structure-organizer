@@ -1,2 +1,4 @@
-pyyaml
-yamllint
+pyyaml~=5.3.1
+yamllint==1.25.0
+
+requests~=2.24.0

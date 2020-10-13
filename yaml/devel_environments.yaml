@@ -1,0 +1,9 @@
+development_environments:
+  dev:
+    name: development
+  test:
+    name: test
+  stage:
+    name: stage
+  prod:
+    name: production

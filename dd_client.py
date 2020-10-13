@@ -9,15 +9,20 @@ import os, sys, logging
 import requests
 from os import listdir
 from os.path import isfile, join
-import yaml
+import yaml, json
 
 host = os.environ.get('HOST')
+logging.debug("Host: {0}".format(host))
 password = os.environ.get('API_KEY')
 user = os.environ.get('USER')
 host = host+"/api/v2"
-verify_cert = bool(os.environ.get('VERIFY_CERT',False))
+verify_cert = False
 loglevel = os.environ.get('LOG_LEVEL',logging.DEBUG)
 yaml_folder = os.environ.get('YAML_FOLDER',"./yaml")
+token = None
+
+
+
 
 root = logging.getLogger()
 root.setLevel(loglevel)
@@ -47,10 +52,12 @@ def retriveToken():
 Sending postmethod to server
 """
 def sendPostRequest(url, headers, data):
-    logging.info(url)
+    print(verify_cert)
+    logging.info("Calling url {0}".format(url))
     r = requests.post(url, headers=headers, data=data,verify=verify_cert)
     if not r.ok:
         logging.error("problem occoured {0}".format(r.status_code))
+        logging.debug("Item sended {0}".format(r.headers))
         return None
     else:
         logging.debug("Object returned {0}".format(r.text))
@@ -59,10 +66,31 @@ def sendPostRequest(url, headers, data):
 """
 Creating product type
 """
-def createProductType(name, critical_product,key_product):
+def createProductTypes(product_types):
     api_call = api_call = host + "/product_types/"
+    headers = {
+              "Authorization": "Token {0}".format(token),
+              "content-type": "application/json",
+              "Content-Type": "application/json"
+              }
+    for product_type in product_types:
+        logging.info("Creating product type: {0}".format(product_type))
+        data = json.dumps(product_types[product_type])
+        sendPostRequest(api_call, headers, data)
 
-
+def createDevelopementEnvironments(developement_environments):
+    logging.info("Creating development_environments")
+    api_call = api_call = host + "/development_environments/"
+    headers = {
+              "Authorization": "Token {0}".format(token),
+              "content-type": "application/json",
+              "Content-Type": "application/json"
+              }
+    for env in developement_environments:
+        logging.info("Environment product type: {0}".format(env))
+        data = json.dumps(developement_environments[env])
+        print(data)
+        sendPostRequest(api_call, headers, data)
 
 
 def sendGetRequest(url, req):
@@ -82,5 +110,16 @@ def loadYaml():
 
 
 if __name__=='__main__':
-    loadYaml()
-#    token = retriveToken()
+    print(verify_cert)
+    object = loadYaml()
+
+    token = os.environ.get('API_KEY')
+
+    for key in object.keys():
+        print(key)
+        if key == "product_types":
+            logging.info(object[key])
+            createProductTypes(object[key])
+        if key == "development_environments":
+            logging.info(object[key])
+            createDevelopementEnvironments(object[key])

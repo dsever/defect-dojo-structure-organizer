@@ -52,9 +52,19 @@ def retriveToken():
 Sending postmethod to server
 """
 def sendPostRequest(url, headers, data):
-    print(verify_cert)
     logging.info("Calling url {0}".format(url))
     r = requests.post(url, headers=headers, data=data,verify=verify_cert)
+    if not r.ok:
+        logging.error("problem occoured {0}".format(r.status_code))
+        logging.debug("Item sended {0}".format(r.headers))
+        return None
+    else:
+        logging.debug("Object returned {0}".format(r.text))
+        return r.json()
+
+#Creating get request
+def sendGetRequest(url, headers):
+    r = requests.get(url, headers=headers, verify=verify_cert)
     if not r.ok:
         logging.error("problem occoured {0}".format(r.status_code))
         logging.debug("Item sended {0}".format(r.headers))
@@ -67,7 +77,7 @@ def sendPostRequest(url, headers, data):
 Creating product type
 """
 def createProductTypes(product_types):
-    api_call = api_call = host + "/product_types/"
+    api_call =  host + "/product_types/"
     headers = {
               "Authorization": "Token {0}".format(token),
               "content-type": "application/json",
@@ -80,25 +90,28 @@ def createProductTypes(product_types):
 
 def createDevelopementEnvironments(developement_environments):
     logging.info("Creating development_environments")
-    api_call = api_call = host + "/development_environments/"
+    existing_env_list=[]
+    api_call  = host + "/development_environments/"
     headers = {
               "Authorization": "Token {0}".format(token),
               "content-type": "application/json",
               "Content-Type": "application/json"
               }
+    existing_env = sendGetRequest(api_call, headers)
+
+    logging.info("Existing Environments {0}".format(existing_env["results"]))
+    for item in existing_env["results"]:
+        existing_env_list.append(item["name"])
+    print(existing_env_list)
     for env in developement_environments:
-        logging.info("Environment product type: {0}".format(env))
+        if env in existing_env_list:
+            logging.info("Already exists {0}".format(env))
+            continue
         data = json.dumps(developement_environments[env])
-        print(data)
         sendPostRequest(api_call, headers, data)
 
-
-def sendGetRequest(url, req):
-    r = requests.post(url, headers=req, verify=True)
-
-
 """
-Loads yaml file into the dictionary
+Loads yaml file from the dictionary
 """
 def loadYaml():
     object = {}
@@ -116,7 +129,7 @@ if __name__=='__main__':
     token = os.environ.get('API_KEY')
 
     for key in object.keys():
-        print(key)
+        logging.info("Observige key {0}",format(key))
         if key == "product_types":
             logging.info(object[key])
             createProductTypes(object[key])

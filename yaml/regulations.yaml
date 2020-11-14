@@ -1,0 +1,8 @@
+regulations:
+  - name: Privacy Security Assesment
+    description: DT Framework for Security And Privacy
+    acronym: PSA
+    category: corporate
+    jurisdiction: DT AG
+    reference: "https://yam.telekom.de/groups/psa-en"
+

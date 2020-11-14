@@ -1,0 +1,19 @@
+products:
+  - name: DefectDojo
+    description: This is vulnerability management tool
+    business_criticality: low
+    internet_accessible: false
+    authorized_users: # this is different than API because We want to have username not ID of its user, something needs to be handle in code
+      - testuser1
+      - testuser2
+    prod_type: security
+  - name: SomeSecretProject
+    description: Security tip project
+    business_criticality:  high
+    internet_accessible: true
+    authorized_users: # this is different than API because We want to have username not ID of its user, something needs to be handle in code
+      - testuser1
+      - testuser2
+    prod_type: security
+
+

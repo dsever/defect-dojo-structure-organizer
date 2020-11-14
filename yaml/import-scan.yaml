@@ -1,0 +1,14 @@
+import_scan:
+  - file: ./support/zap-file.xml
+    scan_type: ZAP Scan
+    engagement: cicd_engagement
+    active: true
+    verified: true
+    minimum_severity: Low
+    test_type: ZAP Scan
+    tags:
+      - cicd
+
+
+
+

@@ -1,0 +1,5 @@
+Here are some notes baout the API:
+
+1. Development_environmet name is not unique
+2. Response in case of Error can be improved (error codes)
+3. In some APIs there are missing delete or update capabilities

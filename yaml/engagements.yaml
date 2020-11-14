@@ -1,0 +1,15 @@
+engagements:
+  - name: cicd_engagement
+    description: this agegement will be added by cicd
+    version: 1.0
+    target_start: "2020-10-15"
+    target_end: "2020-11-10"
+    status: In Progress
+    branch_tag: dev
+    product: DefectDojo
+    engagement_type: CI/CD
+    commit_hash: 6262552hsggs99292
+    tags:
+      - cicd
+
+

@@ -1,0 +1,23 @@
+users:
+  - username: u690908
+    first_name: Dubravko
+    last_name: Sever
+    email: dubravko.sever@pan-net.eu
+    is_active: true
+    is_staff: true
+    title: security engineer
+  - username: testuser1
+    first_name: Dubravko
+    last_name: Sever
+    email: dubravko.sever1@pan-net.eu
+    is_active: true
+    is_staff: false
+    title: security engineer
+  - username: testuser2
+    first_name: Dubravko
+    last_name: Sever
+    email: dubravko.sever2@pan-net.eu
+    is_active: true
+    is_staff: false
+    title: security engineer
+
